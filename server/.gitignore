@@ -1,0 +1,45 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+*.log
+
+## Visual Studio
+.vs/
+.vscode/
+*.sln.docstates
+*.userprefs
+
+## Rider
+.idea/
+*.sln.iml
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+## NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+## Database
+*.db
+*.sqlite
+*.sqlite3
+
+## Environment
+.env
+.env.local
+appsettings.Development.json
