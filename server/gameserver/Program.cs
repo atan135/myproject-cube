@@ -16,10 +16,16 @@ public class Program
 
     public static void Main(string[] args)
     {
+        // 初始化配置系统
+        InitializeConfiguration();
+        
         Logger.LogInfo("Game Server starting...");
 
+        // 从配置获取端口
+        var port = SimpleConfig.GetInt("GameServer:Port", 8888);
+        
         // 启动 TCP 服务器
-        StartTcpServer(8888);
+        StartTcpServer(port);
 
         // 保持服务器运行
         Console.WriteLine("Press any key to stop the server...");
@@ -40,6 +46,12 @@ public class Program
             _isRunning = true;
 
             Logger.LogInfo($"Game Server listening on port {port}");
+            
+            // 显示服务器配置信息
+            DisplayServerInfo();
+            
+            // 显示服务器配置信息
+            DisplayServerInfo();
 
             // 异步接受客户端连接
             _ = Task.Run(async () =>
@@ -114,5 +126,71 @@ public class Program
         _isRunning = false;
         _listener?.Stop();
         Logger.LogInfo("Game Server stopped");
+    }
+    
+    /// <summary>
+    /// 初始化配置系统
+    /// </summary>
+    private static void InitializeConfiguration()
+    {
+        try
+        {
+            // 加载.env文件
+            SimpleConfig.LoadEnv();
+            
+            // 初始化配置
+            SimpleConfig.Initialize("Development");
+            
+            Logger.LogInfo("Game server configuration initialized");
+            
+            // 调试：显示所有配置
+            Logger.LogInfo("=== All Configurations ===");
+            var allConfigs = SimpleConfig.GetAll();
+            foreach (var config in allConfigs.Take(10))
+            {
+                Logger.LogInfo($"{config.Key}: {config.Value}");
+            }
+            Logger.LogInfo("=========================");
+            
+            // 验证必要配置
+            ValidateRequiredConfiguration();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError("Failed to initialize game server configuration", ex);
+            throw;
+        }
+    }
+    
+    /// <summary>
+    /// 验证必需的配置项
+    /// </summary>
+    private static void ValidateRequiredConfiguration()
+    {
+        // 检查游戏服务器配置
+        var gameServerPort = SimpleConfig.GetInt("GameServer:Port");
+        if (gameServerPort <= 0)
+        {
+            Logger.LogError("GameServer:Port configuration is missing or invalid");
+            throw new InvalidOperationException("GameServer:Port configuration is required");
+        }
+        
+        Logger.LogInfo("Game server configuration validation passed");
+    }
+    
+    /// <summary>
+    /// 显示服务器配置信息
+    /// </summary>
+    private static void DisplayServerInfo()
+    {
+        var port = SimpleConfig.GetInt("GameServer:Port", 8888);
+        var tickRate = SimpleConfig.GetInt("GameServer:TickRate", 20);
+        var maxClients = SimpleConfig.GetInt("GameServer:MaxClientsPerRoom", 8);
+        
+        Logger.LogInfo("=== Game Server Configuration ===");
+        Logger.LogInfo($"Listening Port: {port}");
+        Logger.LogInfo($"Tick Rate: {tickRate} FPS");
+        Logger.LogInfo($"Max Clients Per Room: {maxClients}");
+        Logger.LogInfo("================================");
     }
 }
