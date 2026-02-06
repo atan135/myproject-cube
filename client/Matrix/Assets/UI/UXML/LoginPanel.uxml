@@ -1,0 +1,64 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    
+    <!-- 主容器 - 横屏分栏布局 -->
+    <ui:VisualElement name="LoginContainer" class="login-container">
+        
+        <!-- 左侧品牌展示区域 -->
+        <ui:VisualElement name="LeftPanel" class="left-panel">
+            
+            <!-- 装饰元素 -->
+            <ui:VisualElement name="DecorationElements" class="decoration-elements">
+                <ui:VisualElement class="decoration-circle circle-1" />
+                <ui:VisualElement class="decoration-circle circle-2" />
+            </ui:VisualElement>
+            
+            <!-- 品牌内容 -->
+            <ui:VisualElement name="BrandContent" class="brand-content">
+                <ui:Label name="GameTitle" text="MATRIX" class="game-title" />
+                <ui:Label name="Subtitle" text="欢迎来到数字世界" class="subtitle" />
+            </ui:VisualElement>
+            
+        </ui:VisualElement>
+        
+        <!-- 右侧登录表单区域 -->
+        <ui:VisualElement name="RightPanel" class="right-panel">
+            
+            <ui:VisualElement name="LoginForm" class="login-form">
+                
+                <!-- 用户名输入框 -->
+                <ui:VisualElement name="UsernameField" class="input-field">
+                    <ui:Label text="用户名" class="field-label" />
+                    <ui:TextField name="UsernameInput" placeholder-text="请输入用户名" class="text-input" />
+                </ui:VisualElement>
+                
+                <!-- 密码输入框 -->
+                <ui:VisualElement name="PasswordField" class="input-field">
+                    <ui:Label text="密码" class="field-label" />
+                    <ui:TextField name="PasswordInput" placeholder-text="请输入密码" class="text-input password-field" />
+                </ui:VisualElement>
+                
+                <!-- 记住密码选项 -->
+                <ui:Toggle name="RememberToggle" text="记住密码" class="remember-toggle" />
+                
+                <!-- 登录按钮 -->
+                <ui:Button name="LoginButton" text="登录游戏" class="login-button" />
+                
+                <!-- 注册链接 -->
+                <ui:VisualElement name="RegisterSection" class="register-section">
+                    <ui:Label text="还没有账号？" class="register-text" />
+                    <ui:Button name="RegisterButton" text="立即注册" class="register-button" />
+                </ui:VisualElement>
+                
+                <!-- 底部信息 -->
+                <ui:VisualElement name="FooterSection" class="footer-section">
+                    <ui:Label name="VersionInfo" text="Version 1.0.0" class="version-info" />
+                    <ui:Label name="CopyrightInfo" text="© 2026 Matrix Game Studio" class="copyright-info" />
+                </ui:VisualElement>
+                
+            </ui:VisualElement>
+            
+        </ui:VisualElement>
+        
+    </ui:VisualElement>
+    
+</ui:UXML>
