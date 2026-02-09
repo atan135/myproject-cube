@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 289739867
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: assets_ui_login.bundle
+      Dependencies: {}

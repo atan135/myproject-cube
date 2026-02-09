@@ -1,0 +1,44 @@
+{
+    "FileVersion": "2025.9.30",
+    "EnableAddressable": true,
+    "SupportExtensionless": true,
+    "LocationToLower": false,
+    "IncludeAssetGUID": false,
+    "ReplaceAssetPathWithAddress": false,
+    "OutputNameStyle": 0,
+    "BuildBundleType": 2,
+    "BuildPipeline": "BuiltinBuildPipeline",
+    "PackageName": "DefaultPackage",
+    "PackageVersion": "2026-02-09-996",
+    "PackageNote": "2026/2/9 16:36:55",
+    "AssetList": [
+        {
+            "Address": "LoginStyle",
+            "AssetPath": "Assets/UI/Login/LoginStyle.uss",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0,
+            "DependBundleIDs": []
+        },
+        {
+            "Address": "LoginWindow",
+            "AssetPath": "Assets/UI/Login/LoginWindow.uxml",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0,
+            "DependBundleIDs": []
+        }
+    ],
+    "BundleList": [
+        {
+            "BundleName": "assets_ui_login.bundle",
+            "UnityCRC": 1045494804,
+            "FileHash": "5015af3400638a334868b6d9bf2ec311",
+            "FileCRC": 3672343530,
+            "FileSize": 5950,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundleIDs": []
+        }
+    ]
+}

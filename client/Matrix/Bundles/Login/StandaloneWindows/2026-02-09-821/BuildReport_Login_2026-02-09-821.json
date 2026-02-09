@@ -1,0 +1,70 @@
+{
+    "Summary": {
+        "YooVersion": "",
+        "UnityVersion": "2022.3.62f1",
+        "BuildDate": "2026/2/9 13:42:02",
+        "BuildSeconds": 15,
+        "BuildTarget": 5,
+        "BuildPipeline": 0,
+        "BuildMode": 0,
+        "BuildPackageName": "Login",
+        "BuildPackageVersion": "2026-02-09-821",
+        "EnableAddressable": true,
+        "UniqueBundleName": false,
+        "EncryptionServicesClassName": "null",
+        "OutputNameStyle": 1,
+        "CompressOption": 2,
+        "DisableWriteTypeTree": false,
+        "IgnoreTypeTreeChanges": true,
+        "AssetFileTotalCount": 2,
+        "MainAssetTotalCount": 2,
+        "AllBundleTotalCount": 1,
+        "AllBundleTotalSize": 5950,
+        "EncryptedBundleTotalCount": 0,
+        "EncryptedBundleTotalSize": 0,
+        "RawBundleTotalCount": 0,
+        "RawBundleTotalSize": 0
+    },
+    "AssetInfos": [
+        {
+            "Address": "LoginStyle",
+            "AssetPath": "Assets/UI/Login/LoginStyle.uss",
+            "AssetGUID": "b505dd7d40d1c4040b4beb77f928eb3f",
+            "AssetTags": [
+                "UI_Login"
+            ],
+            "MainBundleName": "assets_ui_login.bundle",
+            "MainBundleSize": 5950,
+            "DependBundles": [],
+            "DependAssets": []
+        },
+        {
+            "Address": "LoginWindow",
+            "AssetPath": "Assets/UI/Login/LoginWindow.uxml",
+            "AssetGUID": "fadee25a7403a364b9919ddad1ef4202",
+            "AssetTags": [
+                "UI_Login"
+            ],
+            "MainBundleName": "assets_ui_login.bundle",
+            "MainBundleSize": 5950,
+            "DependBundles": [],
+            "DependAssets": [
+                "Assets/UI/Login/LoginStyle.uss"
+            ]
+        }
+    ],
+    "BundleInfos": [
+        {
+            "BundleName": "assets_ui_login.bundle",
+            "FileName": "5015af3400638a334868b6d9bf2ec311",
+            "FileHash": "5015af3400638a334868b6d9bf2ec311",
+            "FileCRC": "ea83e3da",
+            "FileSize": 5950,
+            "IsRawFile": false,
+            "LoadMethod": 0,
+            "Tags": [
+                "UI_Login"
+            ]
+        }
+    ]
+}

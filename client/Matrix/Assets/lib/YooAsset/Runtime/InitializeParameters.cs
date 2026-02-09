@@ -1,86 +1,111 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace YooAsset
 {
-	/// <summary>
-	/// 运行模式
-	/// </summary>
-	public enum EPlayMode
-	{
-		/// <summary>
-		/// 编辑器下的模拟模式
-		/// </summary>
-		EditorSimulateMode,
+    /// <summary>
+    /// 运行模式
+    /// </summary>
+    public enum EPlayMode
+    {
+        /// <summary>
+        /// 编辑器下的模拟模式
+        /// </summary>
+        EditorSimulateMode,
 
-		/// <summary>
-		/// 离线运行模式
-		/// </summary>
-		OfflinePlayMode,
+        /// <summary>
+        /// 离线运行模式
+        /// </summary>
+        OfflinePlayMode,
 
-		/// <summary>
-		/// 联机运行模式
-		/// </summary>
-		HostPlayMode,
-	}
+        /// <summary>
+        /// 联机运行模式
+        /// </summary>
+        HostPlayMode,
 
-	/// <summary>
-	/// 初始化参数
-	/// </summary>
-	public abstract class InitializeParameters
-	{
-		/// <summary>
-		/// 资源定位地址大小写不敏感
-		/// 注意：默认值为False
-		/// </summary>
-		public bool LocationToLower = false;
+        /// <summary>
+        /// WebGL运行模式
+        /// </summary>
+        WebPlayMode,
 
-		/// <summary>
-		/// 文件解密服务接口
-		/// </summary>
-		public IDecryptionServices DecryptionServices = null;
+        /// <summary>
+        /// 自定义运行模式
+        /// </summary>
+        CustomPlayMode,
+    }
 
-		/// <summary>
-		/// 资源加载的最大数量
-		/// 注意：默认值为MaxValue
-		/// </summary>
-		public int AssetLoadingMaxNumber = int.MaxValue;
-	}
+    /// <summary>
+    /// 初始化参数
+    /// </summary>
+    public abstract class InitializeParameters
+    {
+        /// <summary>
+        /// 同时加载Bundle文件的最大并发数
+        /// </summary>
+        public int BundleLoadingMaxConcurrency = int.MaxValue;
 
-	/// <summary>
-	/// 编辑器下模拟运行模式的初始化参数
-	/// </summary>
-	public class EditorSimulateModeParameters : InitializeParameters
-	{
-		/// <summary>
-		/// 用于模拟运行的资源清单路径
-		/// </summary>
-		public string SimulatePatchManifestPath = string.Empty;
-	}
+        /// <summary>
+        /// 当资源引用计数为零的时候自动释放资源包
+        /// </summary>
+        public bool AutoUnloadBundleWhenUnused = false;
 
-	/// <summary>
-	/// 离线运行模式的初始化参数
-	/// </summary>
-	public class OfflinePlayModeParameters : InitializeParameters
-	{
-	}
+        /// <summary>
+        /// WebGL平台强制同步加载资源对象
+        /// </summary>
+        public bool WebGLForceSyncLoadAsset = false;
 
-	/// <summary>
-	/// 联机运行模式的初始化参数
-	/// </summary>
-	public class HostPlayModeParameters : InitializeParameters
-	{
-		/// <summary>
-		/// 默认的资源服务器下载地址
-		/// </summary>
-		public string DefaultHostServer = string.Empty;
+#if YOOASSET_EXPERIMENTAL
+        /// <summary>
+        /// 启用弱引用资源句柄
+        /// </summary>
+        public bool UseWeakReferenceHandle = false;
+#else
+        internal bool UseWeakReferenceHandle = false;
+#endif
+    }
 
-		/// <summary>
-		/// 备用的资源服务器下载地址
-		/// </summary>
-		public string FallbackHostServer = string.Empty;
+    /// <summary>
+    /// 编辑器下模拟运行模式的初始化参数
+    /// </summary>
+    public class EditorSimulateModeParameters : InitializeParameters
+    {
+        public FileSystemParameters EditorFileSystemParameters;
+    }
 
-		/// <summary>
-		/// 内置资源查询服务接口
-		/// </summary>
-		public IQueryServices QueryServices = null;
-	}
+    /// <summary>
+    /// 离线运行模式的初始化参数
+    /// </summary>
+    public class OfflinePlayModeParameters : InitializeParameters
+    {
+        public FileSystemParameters BuildinFileSystemParameters;
+    }
+
+    /// <summary>
+    /// 联机运行模式的初始化参数
+    /// </summary>
+    public class HostPlayModeParameters : InitializeParameters
+    {
+        public FileSystemParameters BuildinFileSystemParameters;
+        public FileSystemParameters CacheFileSystemParameters;
+    }
+
+    /// <summary>
+    /// WebGL运行模式的初始化参数
+    /// </summary>
+    public class WebPlayModeParameters : InitializeParameters
+    {
+        public FileSystemParameters WebServerFileSystemParameters;
+        public FileSystemParameters WebRemoteFileSystemParameters;
+    }
+
+    /// <summary>
+    /// 自定义运行模式的初始化参数
+    /// </summary>
+    public class CustomPlayModeParameters : InitializeParameters
+    {
+        /// <summary>
+        /// 文件系统初始化参数列表
+        /// 注意：列表最后一个元素作为主文件系统！
+        /// </summary>
+        public readonly List<FileSystemParameters> FileSystemParameterList = new List<FileSystemParameters>();
+    }
 }

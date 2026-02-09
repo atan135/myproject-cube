@@ -1,0 +1,95 @@
+{
+    "Summary": {
+        "YooVersion": "",
+        "UnityVersion": "2022.3.62f1",
+        "BuildDate": "2026/2/9 16:37:00",
+        "BuildSeconds": 4,
+        "BuildTarget": 5,
+        "BuildPipeline": "BuiltinBuildPipeline",
+        "BuildBundleType": 2,
+        "BuildPackageName": "DefaultPackage",
+        "BuildPackageVersion": "2026-02-09-996",
+        "BuildPackageNote": "2026/2/9 16:36:55",
+        "UniqueBundleName": false,
+        "EnableAddressable": true,
+        "SupportExtensionless": true,
+        "LocationToLower": false,
+        "IncludeAssetGUID": false,
+        "AutoCollectShaders": true,
+        "IgnoreRuleName": "YooAsset.Editor.NormalIgnoreRule",
+        "ClearBuildCacheFiles": true,
+        "UseAssetDependencyDB": false,
+        "EnableSharePackRule": true,
+        "SingleReferencedPackAlone": true,
+        "EncryptionServicesClassName": "YooAsset.Editor.EncryptionNone",
+        "ManifestProcessServicesClassName": "YooAsset.Editor.ManifestProcessNone",
+        "ManifestRestoreServicesClassName": "YooAsset.Editor.ManifestRestoreNone",
+        "FileNameStyle": 0,
+        "CompressOption": 2,
+        "DisableWriteTypeTree": false,
+        "IgnoreTypeTreeChanges": true,
+        "ReplaceAssetPathWithAddress": false,
+        "WriteLinkXML": true,
+        "CacheServerHost": "",
+        "CacheServerPort": 0,
+        "BuiltinShadersBundleName": "",
+        "MonoScriptsBundleName": "",
+        "AssetFileTotalCount": 2,
+        "MainAssetTotalCount": 2,
+        "AllBundleTotalCount": 1,
+        "AllBundleTotalSize": 5950,
+        "EncryptedBundleTotalCount": 0,
+        "EncryptedBundleTotalSize": 0
+    },
+    "AssetInfos": [
+        {
+            "Address": "LoginStyle",
+            "AssetPath": "Assets/UI/Login/LoginStyle.uss",
+            "AssetGUID": "b505dd7d40d1c4040b4beb77f928eb3f",
+            "AssetTags": [],
+            "MainBundleName": "assets_ui_login.bundle",
+            "MainBundleSize": 5950,
+            "DependAssets": [],
+            "DependBundles": []
+        },
+        {
+            "Address": "LoginWindow",
+            "AssetPath": "Assets/UI/Login/LoginWindow.uxml",
+            "AssetGUID": "fadee25a7403a364b9919ddad1ef4202",
+            "AssetTags": [],
+            "MainBundleName": "assets_ui_login.bundle",
+            "MainBundleSize": 5950,
+            "DependAssets": [
+                {
+                    "AssetPath": "Assets/UI/Login/LoginStyle.uss",
+                    "AssetGUID": "b505dd7d40d1c4040b4beb77f928eb3f"
+                }
+            ],
+            "DependBundles": []
+        }
+    ],
+    "BundleInfos": [
+        {
+            "BundleName": "assets_ui_login.bundle",
+            "FileName": "5015af3400638a334868b6d9bf2ec311.bundle",
+            "FileHash": "5015af3400638a334868b6d9bf2ec311",
+            "FileCRC": 3672343530,
+            "FileSize": 5950,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "ReferenceBundles": [],
+            "BundleContents": [
+                {
+                    "AssetPath": "Assets/UI/Login/LoginStyle.uss",
+                    "AssetGUID": "b505dd7d40d1c4040b4beb77f928eb3f"
+                },
+                {
+                    "AssetPath": "Assets/UI/Login/LoginWindow.uxml",
+                    "AssetGUID": "fadee25a7403a364b9919ddad1ef4202"
+                }
+            ]
+        }
+    ],
+    "IndependAssets": []
+}

@@ -1,0 +1,51 @@
+ManifestFileVersion: 0
+CRC: 1045494804
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b33f16a9ea489c28699b7b1e6f942119
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 010fcbe6e36ce85bb12454b05034123b
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: b33f16a9ea489c28699b7b1e6f942119
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11995, guid: 0000000000000000e000000000000000, type: 0}
+- Class: 114
+  Script: {fileID: 11998, guid: 0000000000000000e000000000000000, type: 0}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Button/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Label/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleComplexSelector
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleProperty
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleRule
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleSelector
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleSelectorPart
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleSheets.Dimension
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleValueHandle
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.TextField/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.UxmlRootElementFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.VisualElement/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.VisualElementAsset
+Assets:
+- Assets/UI/Login/LoginStyle.uss
+- Assets/UI/Login/LoginWindow.uxml
+Dependencies: []
