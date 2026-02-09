@@ -9,8 +9,8 @@
     "BuildBundleType": 2,
     "BuildPipeline": "BuiltinBuildPipeline",
     "PackageName": "DefaultPackage",
-    "PackageVersion": "2026-02-09-996",
-    "PackageNote": "2026/2/9 16:36:55",
+    "PackageVersion": "1.0",
+    "PackageNote": "2026/2/9 18:13:20",
     "AssetList": [
         {
             "Address": "LoginStyle",
@@ -32,10 +32,10 @@
     "BundleList": [
         {
             "BundleName": "assets_ui_login.bundle",
-            "UnityCRC": 1045494804,
-            "FileHash": "5015af3400638a334868b6d9bf2ec311",
-            "FileCRC": 3672343530,
-            "FileSize": 5950,
+            "UnityCRC": 44319634,
+            "FileHash": "c3df638fa3228da3fea4368242d47931",
+            "FileCRC": 1353936689,
+            "FileSize": 5988,
             "Encrypted": false,
             "Tags": [],
             "DependBundleIDs": []

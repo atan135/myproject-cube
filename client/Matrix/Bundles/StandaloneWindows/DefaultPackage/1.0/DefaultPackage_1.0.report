@@ -2,14 +2,14 @@
     "Summary": {
         "YooVersion": "",
         "UnityVersion": "2022.3.62f1",
-        "BuildDate": "2026/2/9 16:37:00",
-        "BuildSeconds": 4,
+        "BuildDate": "2026/2/9 18:13:33",
+        "BuildSeconds": 12,
         "BuildTarget": 5,
         "BuildPipeline": "BuiltinBuildPipeline",
         "BuildBundleType": 2,
         "BuildPackageName": "DefaultPackage",
-        "BuildPackageVersion": "2026-02-09-996",
-        "BuildPackageNote": "2026/2/9 16:36:55",
+        "BuildPackageVersion": "1.0",
+        "BuildPackageNote": "2026/2/9 18:13:20",
         "UniqueBundleName": false,
         "EnableAddressable": true,
         "SupportExtensionless": true,
@@ -37,7 +37,7 @@
         "AssetFileTotalCount": 2,
         "MainAssetTotalCount": 2,
         "AllBundleTotalCount": 1,
-        "AllBundleTotalSize": 5950,
+        "AllBundleTotalSize": 5988,
         "EncryptedBundleTotalCount": 0,
         "EncryptedBundleTotalSize": 0
     },
@@ -48,7 +48,7 @@
             "AssetGUID": "b505dd7d40d1c4040b4beb77f928eb3f",
             "AssetTags": [],
             "MainBundleName": "assets_ui_login.bundle",
-            "MainBundleSize": 5950,
+            "MainBundleSize": 5988,
             "DependAssets": [],
             "DependBundles": []
         },
@@ -58,7 +58,7 @@
             "AssetGUID": "fadee25a7403a364b9919ddad1ef4202",
             "AssetTags": [],
             "MainBundleName": "assets_ui_login.bundle",
-            "MainBundleSize": 5950,
+            "MainBundleSize": 5988,
             "DependAssets": [
                 {
                     "AssetPath": "Assets/UI/Login/LoginStyle.uss",
@@ -71,10 +71,10 @@
     "BundleInfos": [
         {
             "BundleName": "assets_ui_login.bundle",
-            "FileName": "5015af3400638a334868b6d9bf2ec311.bundle",
-            "FileHash": "5015af3400638a334868b6d9bf2ec311",
-            "FileCRC": 3672343530,
-            "FileSize": 5950,
+            "FileName": "c3df638fa3228da3fea4368242d47931.bundle",
+            "FileHash": "c3df638fa3228da3fea4368242d47931",
+            "FileCRC": 1353936689,
+            "FileSize": 5988,
             "Encrypted": false,
             "Tags": [],
             "DependBundles": [],

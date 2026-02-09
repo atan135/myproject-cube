@@ -1,11 +1,11 @@
 {
     "FileVersion": "1.0.0",
     "PackageName": "DefaultPackage",
-    "PackageVersion": "2026-02-09-996",
+    "PackageVersion": "1.0",
     "Wrappers": [
         {
-            "BundleGUID": "5015af3400638a334868b6d9bf2ec311",
-            "FileName": "5015af3400638a334868b6d9bf2ec311.bundle"
+            "BundleGUID": "c3df638fa3228da3fea4368242d47931",
+            "FileName": "c3df638fa3228da3fea4368242d47931.bundle"
         }
     ]
 }

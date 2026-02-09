@@ -22,13 +22,28 @@ public class LoginController
         {
             loginBtn.clicked += () => {
                 Debug.Log($"尝试登录: 用户名={userField.value}, 密码={passField.value}");
-                
-                // 模拟登录成功逻辑
-                if (!string.IsNullOrEmpty(userField.value)) {
-                    Debug.Log("登录成功！正在进入游戏...");
-                    UIManager.Instance.CloseScreen("Login");
-                }
+                OnClickLogin(userField.value, passField.value);
             };
         }
     }
+
+    public async void OnClickLogin(string username, string password)
+    {
+        Debug.Log($"尝试登录: 用户名={username}, 密码={password}");
+        // 调用逻辑
+        bool isOk = await LoginModule.Instance.LoginAsync(username, password);
+    
+        if (isOk)
+        {
+            Logger.UI("登录成功，准备切换至主城场景");
+            // TODO: SceneManager.LoadScene("MainCity");
+        }
+        else
+        {
+            // 这里的错误提示通常已经在 HttpManager 的 baseRes.msg 中由 Log.Error 打印了
+            Logger.UI("登录失败，请重试");
+        }
+    
+    }
+
 }
