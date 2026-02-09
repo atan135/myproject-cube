@@ -1,0 +1,72 @@
+/* 全屏背景遮罩 */
+.full-screen-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    /* 完全不透明背景，彻底遮挡 3D 场景 */
+    background-color: rgb(24, 24, 24); 
+}
+
+/* 登录窗口主体：800px */
+.login-card {
+    width: 800px;
+    padding: 60px;
+    background-color: rgb(40, 40, 40);
+    border-radius: 20px;
+    border-width: 2px;
+    border-color: rgb(60, 60, 60);
+    /* 增加阴影感 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.title-text {
+    font-size: 48px;
+    -unity-font-style: bold;
+    color: #ffffff;
+    margin-bottom: 40px;
+    -unity-text-align: middle-center;
+}
+
+/* 输入框样式适配 800px */
+.input-field {
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #eeeeee;
+}
+
+/* 按钮组布局 */
+.button-group {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.login-button {
+    flex-grow: 1;
+    height: 60px;
+    font-size: 22px;
+    border-radius: 10px;
+    margin: 0 10px;
+    transition-duration: 0.2s;
+}
+
+.primary-btn {
+    background-color: #0078d4;
+    color: white;
+    border-width: 0;
+}
+
+.primary-btn:hover {
+    background-color: #0086f0;
+}
+
+.footer-text {
+    margin-top: 40px;
+    font-size: 16px;
+    color: #888888;
+    -unity-text-align: middle-center;
+}

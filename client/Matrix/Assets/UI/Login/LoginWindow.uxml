@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+    
+    <ui:Style src="project://database/Assets/UI/Login/LoginStyle.uss" />
+    
+    <ui:VisualElement name="Background" class="full-screen-overlay">
+        <ui:VisualElement name="LoginBox" class="login-card">
+            <ui:Label text="账号登录" name="Title" class="title-text" />
+            
+            <ui:TextField label="用户名" name="UserField" class="input-field" />
+            <ui:TextField label="密  码" name="PasswordField" password="true" class="input-field" />
+            
+            <ui:VisualElement class="button-group">
+                <ui:Button text="登录" name="LoginButton" class="login-button primary-btn" />
+                <ui:Button text="注册账号" name="RegisterButton" class="login-button secondary-btn" />
+            </ui:VisualElement>
+            
+            <ui:Label text="登录即代表同意用户协议" class="footer-text" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
