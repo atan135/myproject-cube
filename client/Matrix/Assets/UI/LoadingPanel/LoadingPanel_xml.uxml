@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project:/Assets/UI/LoadingPanel/LoadingPanel_style.uss" />
+    <Style src="project://database/Assets/UI/LoadingPanel/LoadingPanel_style.uss?fileID=7433441132597879392&amp;guid=ed373e52f691eb343bfe967b07edbe3b&amp;type=3#LoadingPanel_style" />
     <ui:VisualElement name="Background" class="loading-background">
         <ui:VisualElement name="CenterContainer" class="loading-container">
             <ui:Label text="正在进入主城..." name="StatusLabel" class="loading-label" />
             <ui:ProgressBar value="0" name="LoadProgressBar" class="loading-bar" />
-            <ui:Label text="资源同步中，请稍候" name="TipLabel" class="loading-tip" />
+            <ui:Label text="资源同步中，请稍候..." name="TipLabel" class="loading-tip" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
