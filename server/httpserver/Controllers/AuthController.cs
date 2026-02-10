@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+
+using Matrix.Shared;
 using Cube.Shared.Models;
 using Cube.Shared.Repositories;
 using Cube.Shared.Utils;
@@ -32,25 +34,25 @@ public class AuthController : ControllerBase
         try
         {
             // 记录收到的登录请求参数（密码脱敏）
-            var maskedPassword = request.password.Length > 2 ? 
-                request.password.Substring(0, 2) + "***" : "***";
-            LogUtils.Info($"收到登录请求 - 用户名: {request.username}, 密码: {maskedPassword}, 客户端IP: {GetClientIp()}, UserAgent: {Request.Headers.UserAgent} device: {request.device}");
+            var maskedPassword = request.Password.Length > 2 ? 
+                request.Password.Substring(0, 2) + "***" : "***";
+            LogUtils.Info($"收到登录请求 - 用户名: {request.UserName}, 密码: {maskedPassword}, 客户端IP: {GetClientIp()}, UserAgent: {Request.Headers.UserAgent} device: {request.Device}");
             
             // 验证输入
-            if (string.IsNullOrWhiteSpace(request.username) || string.IsNullOrWhiteSpace(request.password))
+            if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
             {
-                LogUtils.Warning($"登录验证失败 - 用户名或密码为空, 用户名: {request.username}");
+                LogUtils.Warning($"登录验证失败 - 用户名或密码为空, 用户名: {request.UserName}");
                 return BadRequest(new { error = "用户名和密码不能为空" });
             }
 
             await _database.OpenAsync();
             
             // 查找用户
-            LogUtils.Info($"正在查询用户: {request.username}");
-            var user = await _userRepository.GetUserByUsernameAsync(request.username);
+            LogUtils.Info($"正在查询用户: {request.UserName}");
+            var user = await _userRepository.GetUserByUsernameAsync(request.UserName);
             if (user == null)
             {
-                LogUtils.Warning($"登录失败 - 用户不存在: {request.username}, IP: {GetClientIp()}");
+                LogUtils.Warning($"登录失败 - 用户不存在: {request.UserName}, IP: {GetClientIp()}");
                 // 记录失败的登录尝试
                 await _userRepository.CreateLoginRecordAsync(0, GetClientIp(), Request.Headers.UserAgent, false, "用户不存在");
                 return Unauthorized(new { error = "用户名或密码错误" });
@@ -67,7 +69,7 @@ public class AuthController : ControllerBase
 
             // 验证密码
             LogUtils.Info($"验证用户密码 - 用户名: {user.Username}");
-            if (!UserRepository.VerifyPassword(request.password, user.PasswordHash))
+            if (!UserRepository.VerifyPassword(request.Password, user.PasswordHash))
             {
                 LogUtils.Warning($"登录失败 - 密码验证失败: {user.Username}(ID:{user.Id}), IP: {GetClientIp()}");
                 await _userRepository.CreateLoginRecordAsync(user.Id, GetClientIp(), Request.Headers.UserAgent, false, "密码错误");
@@ -78,7 +80,7 @@ public class AuthController : ControllerBase
             LogUtils.Info($"生成JWT Token - 用户: {user.Username}(ID:{user.Id})");
             var token = JwtUtils.GenerateToken(user.Id, user.Username);
             var expiresAt = DateTime.UtcNow.AddMinutes(1440); // 24小时过期
-
+            
             // 更新最后登录时间
             LogUtils.Info($"更新最后登录时间 - 用户: {user.Username}(ID:{user.Id})");
             await _userRepository.UpdateLastLoginTimeAsync(user.Id, DateTime.UtcNow);
@@ -90,24 +92,25 @@ public class AuthController : ControllerBase
             // 返回登录响应
             var response = new LoginResponse
             {
-                UserId = user.Id,
-                Username = user.Username,
-                Nickname = user.Nickname,
-                Email = user.Email,
-                Level = user.Level,
-                Experience = user.Experience,
-                Coins = user.Coins,
-                Diamonds = user.Diamonds,
                 Token = token,
-                ExpiresAt = expiresAt
+                UserInfo = new UserInfo
+                {
+                    UserId = user.Id,
+                    Nickname = user.Nickname,
+                    Email = user.Email,
+                    Level = user.Level,
+                    Experience = user.Experience,
+                    Coins = user.Coins,
+                    Diamonds = user.Diamonds,
+                    ExpiresAt = expiresAt
+                }
             };
 
-            LogUtils.Info($"登录成功 - 用户: {user.Username}(ID:{user.Id}), 昵称: {user.Nickname}, 等级: {user.Level}, 游戏币: {user.Coins}, 钻石: {user.Diamonds}, IP: {GetClientIp()}");
-            return Ok(response);
+            return Ok(BaseResponse<LoginResponse>.Success(response)); // Changed from return Ok(response);
         }
         catch (Exception ex)
         {
-            LogUtils.Error($"登录过程发生异常 - 用户名: {request?.username ?? "未知"}, IP: {GetClientIp()}", ex);
+            LogUtils.Error($"登录过程发生异常 - 用户名: {request?.UserName ?? "未知"}, IP: {GetClientIp()}", ex);
             return StatusCode(500, new { error = "服务器内部错误" });
         }
         finally
@@ -266,25 +269,4 @@ public class AuthController : ControllerBase
         // 使用RemoteIpAddress
         return HttpContext.Connection.RemoteIpAddress?.ToString();
     }
-}
-
-/// <summary>
-/// 登录请求模型
-/// </summary>
-public class LoginRequest
-{
-    public string username { get; set; } = string.Empty;
-    public string password { get; set; } = string.Empty;
-    public string device { get; set; } = string.Empty;
-}
-
-/// <summary>
-/// 注册请求模型
-/// </summary>
-public class RegisterRequest
-{
-    public string Username { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string Password { get; set; } = string.Empty;
-    public string? Nickname { get; set; }
 }

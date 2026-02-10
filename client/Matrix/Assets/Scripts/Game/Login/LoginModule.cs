@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using Matrix.Shared;
 
 public class LoginModule
 {
@@ -31,8 +32,8 @@ public class LoginModule
         };
 
         // 调用重构后的 HttpManager
-        // 注意：这里的 LoginData 对应 BaseResponse<T> 中的 T
-        var data = await HttpManager.Instance.PostAsync<LoginData>("/api/auth/login", loginParams);
+        // 注意：这里的 LoginResponse 对应 BaseResponse<T> 中的 T
+        var data = await HttpManager.Instance.PostAsync<LoginResponse>("/api/auth/login", loginParams);
 
         if (data != null)
         {
@@ -47,19 +48,19 @@ public class LoginModule
     /// <summary>
     /// 处理登录成功后的数据分配
     /// </summary>
-    private void HandleLoginSuccess(LoginData data)
+    private void HandleLoginSuccess(LoginResponse data)
     {
         // 1. 同步 Token 到网络层
-        HttpManager.Instance.AuthToken = data.token;
+        HttpManager.Instance.AuthToken = data.Token;
         
         // 2. 缓存用户信息
-        this.CurrentUser = data.userInfo;
+        this.CurrentUser = data.UserInfo;
 
         // 3. 持久化 Token (用于下次自动登录)
-        PlayerPrefs.SetString(SAVE_TOKEN_KEY, data.token);
+        PlayerPrefs.SetString(SAVE_TOKEN_KEY, data.Token);
         PlayerPrefs.Save();
 
-        Logger.Http($"<color=lime>登录成功!</color> 欢迎玩家: {CurrentUser.nickname} (UID: {CurrentUser.uid})");
+        Logger.Http($"<color=lime>登录成功!</color> 欢迎玩家: {CurrentUser.Nickname} (UID: {CurrentUser.UserId})");
     }
 
     /// <summary>
@@ -74,22 +75,3 @@ public class LoginModule
     }
 }
 
-#region 数据实体 (根据服务端 JSON 定义)
-
-[Serializable]
-public class LoginData
-{
-    public string token;
-    public UserInfo userInfo;
-}
-
-[Serializable]
-public class UserInfo
-{
-    public string uid;
-    public string nickname;
-    public int level;
-    public int gold;
-}
-
-#endregion

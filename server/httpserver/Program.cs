@@ -5,6 +5,8 @@ using Cube.Shared.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cube.HttpServer;
 
@@ -25,10 +27,15 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // 添加服务
-        builder.Services.AddControllers();
+        builder.Services.AddControllers().AddNewtonsoftJson(options =>
+        {
+            // 必须配置 ContractResolver，否则它可能会忽略 JsonProperty 并强行改回驼峰命名
+            options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+        });
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         
+
         // 注册Database服务
         builder.Services.AddSingleton(sp =>
         {
@@ -138,12 +145,12 @@ public class Program
         {
             "Jwt:SecretKey",
             "DATABASE_NAME",
-            "DATABASE_USER", 
+            "DATABASE_USER",
             "DATABASE_PASSWORD"
         };
-        
+
         var missingConfigs = new List<string>();
-        
+
         foreach (var configKey in requiredConfigs)
         {
             var value = SimpleConfig.GetString(configKey);

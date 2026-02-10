@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
-using entity;
+using Matrix.Shared;
 
 public class HttpManager : MonoBehaviour
 {
@@ -55,13 +55,13 @@ public class HttpManager : MonoBehaviour
             {
                 // 1. 先解析成基础协议格式
                 var baseRes = JsonConvert.DeserializeObject<BaseResponse<T>>(request.downloadHandler.text);
-                Logger.Http($"[响应] {endPoint}: {baseRes.msg}"); 
+                Logger.Http($"[响应] {endPoint}: {baseRes.Msg}"); 
                 // 2. 统一处理业务状态码
-                if (baseRes.code == 200) 
+                if (baseRes.Code == 200) 
                 {
-                    return baseRes.data; // 直接返回业务需要的 T 数据
+                    return baseRes.Data; // 直接返回业务需要的 T 数据
                 }
-                else if (baseRes.code == 401)
+                else if (baseRes.Code == 401)
                 {
                     Debug.LogWarning("Token过期，请重新登录");
                     // TODO: 可以在这里触发全局事件回到登录界面
@@ -69,7 +69,7 @@ public class HttpManager : MonoBehaviour
                 }
                 else 
                 {
-                    Debug.LogError($"[业务错误] {endPoint}: {baseRes.msg}");
+                    Debug.LogError($"[业务错误] {endPoint}: {baseRes.Msg}");
                     // TODO: 可以在这里调用 UIManager.ShowTips(baseRes.msg)
                     return default;
                 }
