@@ -36,7 +36,10 @@ public class LoginController
         if (isOk)
         {
             Logger.UI("登录成功，准备切换至主城场景");
-            // TODO: SceneManager.LoadScene("MainCity");
+            // 1. 自动加载/获取 Loading 模块
+            var loading = await LoadingModule.GetInstanceAsync();
+            // 2. 执行场景跳转
+            await loading.LoadSceneWithProgress("Scene_MainCity");
         }
         else
         {

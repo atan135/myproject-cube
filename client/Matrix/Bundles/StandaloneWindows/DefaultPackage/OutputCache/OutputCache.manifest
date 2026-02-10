@@ -1,7 +1,25 @@
 ManifestFileVersion: 0
-CRC: 1210543894
+CRC: 2983274482
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: assets_ui_login.bundle
+      Dependencies: {}
+    Info_1:
+      Name: assets_art_scene.bundle
+      Dependencies:
+        Dependency_0: share_assets_art_fbx.bundle
+    Info_2:
+      Name: assets_ui_loadingpanel.bundle
+      Dependencies:
+        Dependency_0: share_assets_ui_common.bundle
+    Info_3:
+      Name: share_assets_art_fbx.bundle
+      Dependencies: {}
+    Info_4:
+      Name: share_assets_ui_common.bundle
+      Dependencies:
+        Dependency_0: share_assets_ui_toolkit_unitythemes.bundle
+    Info_5:
+      Name: share_assets_ui_toolkit_unitythemes.bundle
       Dependencies: {}

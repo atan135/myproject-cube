@@ -466,3 +466,13 @@ client/Matrix/Assets/lib/wwise/API/Runtime/Plugins/**/*.wav
 # Keep only header files and small config files
 !client/Matrix/Assets/lib/wwise/API/Runtime/Plugins/**/*.h
 !client/Matrix/Assets/lib/wwise/API/Runtime/Plugins/**/*.plist
+
+
+# ================================================
+# 忽略yooasset的生成
+# ================================================
+# 忽略 YooAsset 构建产物 (包含热更包和临时缓存)
+client/Matrix/Bundles/
+
+# 忽略 StreamingAssets 下自动拷贝的资源（建议手动管理该目录，或者全部忽略后只保留核心文件）
+client/Matrix/Assets/StreamingAssets/yoo/
