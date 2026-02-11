@@ -1,55 +1,79 @@
 using UnityEngine;
 
-public class SpaceCameraControl : MonoBehaviour
+public class SmoothCameraLoader : MonoBehaviour
 {
     [Header("移动设置")]
-    public float moveSpeed = 10f;
-    public float zoomSpeed = 50f;       // 滚轮灵敏度
-    public float smoothTime = 0.2f;     // 缓冲时间（越小越灵敏，越大越丝滑）
+    public float moveSpeed = 20f;        // 基础移动速度
+    public float shiftMultiplier = 2.5f; // 按住Shift时的加速倍数
+    public float smoothness = 10f;      // 平滑度
 
     [Header("旋转设置")]
-    public float lookSpeed = 2f;
-    
-    private float rotationX = 0f;
-    private float rotationY = 0f;
-    
-    // 平滑辅助变量
+    public float rotateSpeed = 2f;      // 旋转灵敏度
+    public float minVerticalAngle = -80f;
+    public float maxVerticalAngle = 80f;
+
+    [Header("缩放设置")]
+    public float zoomSpeed = 5f;
+
     private Vector3 targetPosition;
-    private Vector3 currentVelocity = Vector3.zero;
+    private Quaternion targetRotation;
+    private float rotationX;
+    private float rotationY;
 
     void Start()
     {
-        Vector3 rot = transform.localRotation.eulerAngles;
-        rotationX = rot.y;
-        rotationY = rot.x;
-        targetPosition = transform.position; // 初始化目标位置
+        targetPosition = transform.position;
+        targetRotation = transform.rotation;
+        
+        // 初始化旋转角度，避免突变
+        Vector3 angles = transform.eulerAngles;
+        rotationX = angles.y;
+        rotationY = angles.x;
     }
 
-    void Update()
+    void LateUpdate()
     {
-        // 1. 旋转逻辑（保持不变，右键控制）
+        HandleMovement();
+        HandleRotation();
+        HandleZoom();
+
+        // 执行平滑插值
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothness);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smoothness);
+    }
+
+    void HandleMovement()
+    {
+        float speed = moveSpeed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.LeftShift)) speed *= shiftMultiplier;
+
+        float h = Input.GetAxisRaw("Horizontal"); // A, D
+        float v = Input.GetAxisRaw("Vertical");   // W, S
+
+        Vector3 moveDir = transform.right * h + transform.forward * v;
+        targetPosition += moveDir * speed;
+    }
+
+    void HandleRotation()
+    {
+        // 只有点击鼠标右键时才旋转
         if (Input.GetMouseButton(1))
         {
-            rotationX += Input.GetAxis("Mouse X") * lookSpeed;
-            rotationY -= Input.GetAxis("Mouse Y") * lookSpeed;
-            rotationY = Mathf.Clamp(rotationY, -90f, 90f);
-            transform.localRotation = Quaternion.Euler(rotationY, rotationX, 0);
+            rotationX += Input.GetAxis("Mouse X") * rotateSpeed;
+            rotationY -= Input.GetAxis("Mouse Y") * rotateSpeed;
+            rotationY = Mathf.Clamp(rotationY, minVerticalAngle, maxVerticalAngle);
+
+            targetRotation = Quaternion.Euler(rotationY, rotationX, 0);
         }
+    }
 
-        // 2. 移动逻辑（WASD）
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        Vector3 moveInput = (transform.right * h + transform.up * v).normalized;
-        targetPosition += moveInput * moveSpeed * Time.deltaTime;
-
-        // 3. 丝滑滚动核心：累加目标位置，而非直接位移
+    void HandleZoom()
+    {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (Mathf.Abs(scroll) > 0.01f)
         {
-            targetPosition += transform.forward * scroll * zoomSpeed;
+            // 向前/向后推相机实现缩放效果
+            targetPosition += transform.forward * scroll * zoomSpeed * 10f;
         }
-
-        // 4. 使用 SmoothDamp 消除顿挫感
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
     }
 }
