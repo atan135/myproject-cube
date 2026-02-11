@@ -1,3 +1,4 @@
+using Cube.GameServer.KcpTransport;
 using Cube.Shared.Utils;
 
 namespace Cube.GameServer;
@@ -5,6 +6,10 @@ namespace Cube.GameServer;
 /// <summary>
 /// 游戏房间
 /// 管理单个游戏房间的状态和逻辑
+/// 
+/// 双协议集成：
+/// - MagicOnion (TCP) 处理技能/战斗等可靠消息
+/// - KcpMovementServer (UDP) 处理位移同步
 /// </summary>
 public class GameRoom
 {
@@ -13,6 +18,12 @@ public class GameRoom
     public bool IsRunning { get; private set; }
     private int _tickRate = 20; // 20 ticks per second
     private Timer? _gameLoopTimer;
+
+    /// <summary>
+    /// KCP 位移同步服务器引用
+    /// 由 Program.cs 创建并注入
+    /// </summary>
+    public KcpMovementServer? MovementServer { get; set; }
 
     public GameRoom(string roomId)
     {
@@ -64,16 +75,30 @@ public class GameRoom
     }
 
     /// <summary>
-    /// 更新游戏状态（帧同步）
+    /// 更新游戏状态
+    /// 位移同步由 KcpMovementServer 独立处理
+    /// 这里只需处理技能/战斗等逻辑
     /// </summary>
     private void UpdateGameState(object? state)
     {
         if (!IsRunning) return;
 
         // TODO: 处理游戏逻辑
-        // 1. 收集所有客户端输入
-        // 2. 执行游戏逻辑
-        // 3. 广播状态更新给所有客户端
+        // 1. 处理技能/战斗计算（通过 MagicOnion 接收指令）
+        // 2. 检查碰撞/伤害等
+        // 3. 通过 MagicOnion 广播战斗结果
+        //
+        // 注意：位移相关逻辑已移至 KcpMovementServer
+        // 如需获取玩家位置进行战斗判定，可通过 MovementServer.GetPlayerState() 获取
+    }
+
+    /// <summary>
+    /// 获取指定玩家的当前位置（从KCP服务获取）
+    /// 用于技能/战斗计算时需要位置信息的场景
+    /// </summary>
+    public ServerPlayerState? GetPlayerPosition(int playerId)
+    {
+        return MovementServer?.GetPlayerState(playerId);
     }
 }
 
@@ -84,5 +109,6 @@ public class GameClient
 {
     public string ClientId { get; set; } = string.Empty;
     public long UserId { get; set; }
+    public int PlayerId { get; set; }
     // TODO: 添加更多客户端状态信息
 }
