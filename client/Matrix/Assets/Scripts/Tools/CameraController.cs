@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[DefaultExecutionOrder(0)]
 public class SmoothCameraLoader : MonoBehaviour
 {
     [Header("移动设置")]
