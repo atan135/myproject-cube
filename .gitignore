@@ -474,3 +474,5 @@ client/Matrix/Assets/lib/wwise/API/Runtime/Plugins/**/*.wav
 # 忽略 YooAsset 构建产物 (包含热更包和临时缓存)
 client/Matrix/Assets/StreamingAssets/yoo
 client/Matrix/Bundles/
+# 忽略 CsvCreate 工具生成的 L10N 文件
+tools/CsvCreate/Generated_L10N/
