@@ -64,7 +64,10 @@ public class KcpMovementServer : IDisposable
     private const float GRAVITY = -9.81f;
     private const float GROUND_Y = 0f; // 地面高度
     private const float MAX_MOVE_SPEED = 10f; // 最大移动速度（防作弊）
-    private const float DELTA_TIME_MS = 10f; // tick间隔 (ms)
+    private const float MAX_DT = 0.05f; // 最大 dt 上限（50ms），防止极端卡顿导致物理异常
+
+    // 物理计时
+    private long _lastPhysicsTime;
 
     /// <summary>当前连接数</summary>
     public int ConnectionCount => _playersByConnection.Count;
@@ -113,6 +116,7 @@ public class KcpMovementServer : IDisposable
         _isRunning = true;
         _serverClock.Start();
         _lastSnapshotTime = 0;
+        _lastPhysicsTime = 0;
         _serverTick = 0;
 
         _tickThread = new Thread(TickLoop)
@@ -167,10 +171,25 @@ public class KcpMovementServer : IDisposable
     /// <summary>
     /// 更新所有玩家的物理状态
     /// 服务端权威：根据最后收到的输入计算位置
+    /// 使用真实经过时间而非固定常量，避免 Thread.Sleep 精度不足导致客户端/服务端速度不一致
     /// </summary>
     private void UpdatePhysics()
     {
-        float dt = DELTA_TIME_MS / 1000f;
+        long now = _serverClock.ElapsedMilliseconds;
+        float dt;
+        if (_lastPhysicsTime > 0)
+        {
+            dt = (now - _lastPhysicsTime) / 1000f;
+            // 限制 dt 上限，防止极端情况（线程被挂起等）导致物理飞跃
+            dt = Math.Min(dt, MAX_DT);
+        }
+        else
+        {
+            dt = 0.01f; // 首次 tick 使用 10ms
+        }
+        _lastPhysicsTime = now;
+
+        if (dt <= 0) return; // 时间未前进则跳过
 
         foreach (var kvp in _playersByConnection)
         {
@@ -220,11 +239,15 @@ public class KcpMovementServer : IDisposable
             float yaw = input.YawAngle;
             var rotation = new QuaternionData(0, MathF.Sin(yaw / 2f), 0, MathF.Cos(yaw / 2f));
 
+            // 更新水平速度到 Velocity，供客户端快照插值外推使用
+            float velX = input.Direction.X * speed;
+            float velZ = input.Direction.Z * speed;
+
             // 更新权威状态
             player.Position = pos;
-            player.Velocity = vel;
+            player.Velocity = new Vector3Data(velX, vel.Y, velZ);
             player.Rotation = rotation;
-            player.LastUpdateTime = _serverClock.ElapsedMilliseconds;
+            player.LastUpdateTime = now;
         }
     }
 

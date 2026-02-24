@@ -30,6 +30,14 @@ namespace Cube.Network.KcpMovement
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float mouseSensitivity = 2f;
 
+        [Header("校正设置")]
+        [Tooltip("偏差小于此值时不做校正 (米)")]
+        [SerializeField] private float correctionThreshold = 0.05f;
+        [Tooltip("偏差超过此值时强制瞬移 (米)")]
+        [SerializeField] private float hardCorrectionDistance = 5.0f;
+        [Tooltip("平滑校正速率（越大越快趋近服务端位置）")]
+        [SerializeField] private float correctionLerpSpeed = 10f;
+
         [Header("测试设置")]
         [SerializeField] private bool autoConnect = false;
         [SerializeField] private KeyCode connectKey = KeyCode.C;
@@ -143,19 +151,25 @@ namespace Cube.Network.KcpMovement
                 localPlayerObject.transform.rotation = Quaternion.Euler(0, _yawAngle * Mathf.Rad2Deg, 0);
             }
 
-            // 服务端校正（可选：把本地玩家拉回服务端位置）
+            // 服务端校正：平滑渐进式拉向服务端权威位置
             var serverSnapshot = movementClient.GetLatestLocalSnapshot();
             if (serverSnapshot.HasValue && localPlayerObject != null)
             {
-                // 简单校正：如果偏差过大就直接拉回
                 Vector3 serverPos = serverSnapshot.Value.Position.ToUnityVector3();
                 Vector3 localPos = localPlayerObject.transform.position;
                 float distance = Vector3.Distance(serverPos, localPos);
 
-                if (distance > 2.0f) // 偏差超过 2 米就强制校正
+                if (distance > hardCorrectionDistance)
                 {
+                    // 偏差过大：直接瞬移（可能是瞬移/传送等特殊情况）
                     localPlayerObject.transform.position = serverPos;
-                    Debug.LogWarning($"[Test] Server correction! Distance={distance:F2}m");
+                    Debug.LogWarning($"[Test] Hard correction! Distance={distance:F2}m");
+                }
+                else if (distance > correctionThreshold)
+                {
+                    // 平滑校正：每帧向服务端位置插值，视觉上几乎无感
+                    float t = 1f - Mathf.Exp(-correctionLerpSpeed * Time.deltaTime);
+                    localPlayerObject.transform.position = Vector3.Lerp(localPos, serverPos, t);
                 }
             }
         }
