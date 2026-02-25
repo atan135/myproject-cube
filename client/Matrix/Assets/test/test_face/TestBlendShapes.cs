@@ -16,7 +16,7 @@ public class SimpleFaceController : MonoBehaviour
         meshRenderer = GetComponent<SkinnedMeshRenderer>();
         StartCoroutine(BlinkRoutine());
     }
-    
+
     IEnumerator BlinkRoutine()
     {
         while (true)
