@@ -90,9 +90,10 @@ public class AkiOSSettings : AkWwiseInitializationSettings.PlatformSettings
 			DuckOthers = 2,
 			AllowBluetooth = 4,
 			DefaultToSpeaker = 8,
+			AllowBluetoothA2DP = 32,
 		}
 
-		[UnityEngine.Tooltip("The IDs of the iOS audio session category options, used for customizing the audio session category features. These IDs are functionally equivalent to the corresponding constants defined by the iOS audio session service back-end (AVAudioSession). Refer to Xcode documentation for details on the audio session category options.")]
+		[UnityEngine.Tooltip("The IDs of the iOS audio session category options, used for customizing the audio session category features. These IDs are functionally equivalent to the corresponding constants defined by the iOS audio session service back-end (AVAudioSession). Refer to Xcode documentation for details on the audio session category options. Note: AllowBluetooth is for HFP/Headset routing; AllowBluetoothA2DP is required for Bluetooth speaker output.")]
 		[AkEnumFlag(typeof(CategoryOptions))]
 		public CategoryOptions m_AudioSessionCategoryOptions = CategoryOptions.DuckOthers;
 
